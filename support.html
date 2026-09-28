@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Customer Service — My Bank{% endblock %}
+{% block content %}
+<div class="grid">
+  <section class="card">
+    <h2>Contact</h2>
+    <pre style="white-space:pre-wrap;color:var(--muted);margin:0;">{{ contact }}</pre>
+  </section>
+  <section class="card">
+    <h2>FAQ lookup</h2>
+    <form method="post">
+      <input type="hidden" name="action" value="faq">
+      <label>Keyword (e.g. minimum balance, debit card, loan types)</label>
+      <input name="keyword" required>
+      <button type="submit">Search FAQ</button>
+    </form>
+  </section>
+  <section class="card">
+    <h2>Raise ticket</h2>
+    <form method="post">
+      <input type="hidden" name="action" value="ticket">
+      <label>Customer ID</label>
+      <input name="customer_id" list="customer-ids" required>
+      <label>Category</label>
+      <select name="category">
+        {% for cat in service_categories %}
+        <option>{{ cat }}</option>
+        {% endfor %}
+      </select>
+      <label>Subject</label>
+      <textarea name="subject" rows="3" required></textarea>
+      <button type="submit">Submit ticket</button>
+    </form>
+  </section>
+</div>
+
+<section class="card" style="margin-top:1rem;">
+  <h2>Tickets</h2>
+  <table>
+    <tr><th>ID</th><th>Customer</th><th>Category</th><th>Subject</th><th>Status</th></tr>
+    {% for t in tickets %}
+    <tr>
+      <td>{{ t.ticket_id }}</td>
+      <td>{{ t.customer_id }}</td>
+      <td>{{ t.category }}</td>
+      <td>{{ t.subject }}</td>
+      <td>{{ t.status }}</td>
+    </tr>
+    {% else %}<tr><td colspan="5">No tickets yet.</td></tr>{% endfor %}
+  </table>
+</section>
+
+<datalist id="customer-ids">{% for c in customers %}<option value="{{ c.customer_id }}">{% endfor %}</datalist>
+{% endblock %}

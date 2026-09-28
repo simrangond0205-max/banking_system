@@ -1,0 +1,6 @@
+__pycache__
+*.pyc
+.git
+bank.db
+backup.json
+*.md

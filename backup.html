@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Backup — My Bank{% endblock %}
+{% block content %}
+<div class="grid">
+  <section class="card">
+    <h2>SQLite database</h2>
+    <p>All changes are saved automatically to <code>bank.db</code> in this project folder.</p>
+  </section>
+  <section class="card">
+    <h2>JSON backup ({{ backup_file }})</h2>
+    <form method="post">
+      <button name="action" value="export" type="submit">Export JSON</button>
+      <button name="action" value="import" type="submit">Import JSON</button>
+    </form>
+  </section>
+</div>
+{% endblock %}

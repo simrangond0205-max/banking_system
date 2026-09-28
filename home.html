@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — My Bank{% endblock %}
+{% block content %}
+<div class="grid">
+  <section class="card">
+    <h2>Minimum balance</h2>
+    <ul class="compact">
+      {% for t, v in min_balances.items() %}
+      <li>{{ t }}: {{ "%.2f"|format(v) }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+  <section class="card">
+    <h2>Loan sections (all)</h2>
+    <ul class="compact">
+      {% for name in loan_sections %}
+      <li>{{ name }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+  <section class="card">
+    <h2>Overview</h2>
+    <p>Customers: <span class="pill">{{ customers|length }}</span></p>
+    <p>Accounts: <span class="pill">{{ accounts|length }}</span></p>
+    <p>Loans: <span class="pill">{{ loans|length }}</span></p>
+  </section>
+</div>
+
+<section class="card" style="margin-top:1rem;">
+  <h2>Recent accounts</h2>
+  <table>
+    <tr><th>Account</th><th>Type</th><th>Balance</th><th>Customer</th></tr>
+    {% for a in accounts %}
+    <tr>
+      <td>{{ a.account_number }}</td>
+      <td>{{ a.account_type.value }}</td>
+      <td>{{ "%.2f"|format(a.balance) }}</td>
+      <td>{{ a.customer_id }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="4">No accounts yet. Open one under Accounts.</td></tr>
+    {% endfor %}
+  </table>
+</section>
+{% endblock %}
